@@ -13,9 +13,6 @@ public class MineSweeper {
 		
 		System.out.println("지뢰찾기 맵 크기를 지정하시요 : ");
 		int size = sc.nextInt();
-		
-		
-		
 		// 지뢰 셋팅 배열
 		int[][] map = new int[size][size];
 		// map배열을 join
@@ -24,15 +21,23 @@ public class MineSweeper {
 		for (int i = 0; i < map.length; i++) { 
 			map[ran.nextInt(size)][ran.nextInt(size)] = 7;
 		}
+		if (size >= 10 && size < 25) {
+			for (int i = 0; i < 5; i++) {
+				map[ran.nextInt(size)][ran.nextInt(size)] = 7;
+			}
+		} else if (size >= 25) {
+			for (int i = 0; i < 15; i++) {
+				map[ran.nextInt(size)][ran.nextInt(size)] = 7;
+			}	
+		}
 		// 지뢰를 셋팅한 맵 배열을 temp에 join
 		for (int i = 1; i < temp.length - 1; i++) { 
 			for (int k = 1; k < temp.length - 1; k++) {
 				temp[i][k] = map[i-1][k-1];
 			}
 		}
-		// 빈칸을 기준으로 8곳을 확인해서 지뢰가 몇개인지 카운트 해줌
+		// 빈칸을 기준으로 8곳을 확인해서 지뢰가 몇개인지 카운트 해준다.
 		for (int i = 1; i < map.length + 1; i++) { 
-			
 			for (int j = 1; j < map.length + 1; j++) {
 				int count = 0;
 				if (temp[i][j] == 7) {
@@ -73,15 +78,21 @@ public class MineSweeper {
 			System.out.println();
 		}
 		System.out.println("\n----------------------\n");
-		// 최종출력
-		for (int i = 1; i < map.length + 1; i++) {
-			for (int j = 1; j < map.length + 1; j++) {
-				// 지뢰가 int 형식이라서 8곳 중에 지뢰가 있을경우 지뢰가 8로 증가하기 때문에 
-				// 7보다 커지면 다시 7로 셋팅
-//				if (temp[i][j] > 7) {
-//					temp[i][j] = 7;
-//				}
-				System.out.printf("%2d", temp[i][j]);
+		// 문자열 변환
+		String[][] change = new String[size + 2][size + 2];
+		
+		for (int i = 0; i < change.length; i++) {
+			for (int j = 0; j < change.length; j++) {
+				if (temp[i][j] == 7) {
+					change[i][j] = "*";
+				} else {
+					change[i][j] = Integer.toString(temp[i][j]);
+				}
+			}
+		}
+		for (int i = 1; i < change.length - 1; i++) {
+			for (int j = 1; j < change.length - 1; j++) {
+				System.out.printf("%2s",change[i][j]);
 			}
 			System.out.println();
 		}
