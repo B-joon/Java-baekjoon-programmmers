@@ -13,48 +13,50 @@ public class Keypad {
 
 	}
 
-	public String solution(int[] number, String hand) {
-		StringBuffer sb = new StringBuffer();
+	public String solution(int[] numbers, String hand) {
+		String answer = "";
         int LStart = 10;
 		int RStart = 12;
         
-        for (int num : number) {
-			if (num == 1 || num == 4 || num == 7) {
-				sb.append("L");
-				LStart = num;
-
-			} else if (num == 3 || num == 6 || num == 9) {
-				sb.append("R");
-				RStart = num;
-			} else {
-				int Lhand = result(LStart, num);
-				int Rhand = result(RStart, num);
-				if (Lhand < Rhand) {
-					sb.append("L");
-					LStart = num;
-				} else if (Lhand > Rhand) {
-					sb.append("R");
-					RStart = num;
-				} else {
-					if (hand.equals("right")) {
-						sb.append("R");
-						RStart = num;
-					} else {
-						sb.append("L");
-						LStart = num;
-					}
-				}
-			}
+		for (int i = 0; i < numbers.length; i++) {
+        	if (numbers[i] == 1 || numbers[i] == 4 || numbers[i] == 7) {
+                answer += "L";
+                LStart = numbers[i];
+            } else if (numbers[i] == 3 || numbers[i] == 6 || numbers[i] == 9) {
+                answer += "R";
+                RStart = numbers[i];
+            } else {
+                int Lhand = result(LStart, numbers[i]);
+                int Rhand = result(RStart, numbers[i]);
+                
+                if (Lhand > Rhand) {
+                    answer += "R";
+                    RStart = numbers[i];
+                } else if (Lhand < Rhand) {
+                    answer += "L";
+                    LStart = numbers[i];
+                } else {
+                    if (hand.equals("right")) {
+                        answer += "R";
+                        RStart = numbers[i];
+                    } else {
+                        answer += "L";
+                        LStart = numbers[i];
+                    }
+                }
+                
+            }
 		}
         
-        return sb.toString();
+        return answer;
 	}
 
 	public static int result(int hand, int number) {
 
 		if (hand == 0) {
 			hand = 11;
-		} else if (number == 0) {
+		}
+		if (number == 0) {
 			number = 11;
 		}
 		
@@ -64,18 +66,20 @@ public class Keypad {
 		int numX = (number -1) / 3;
 		int numY = (number -1) % 3;
 		
-		return Math.abs(handX - numX) + Math.abs(handY - numY);
+		int resX = handX - numX;
+		int resY = handY - numY;
+		
+		return AV(resX, resY);
 	}
-	
-	
-//	public static int AV(int resX, int resY) {
-//		if (resX < 0) {
-//			resX = -resX;
-//		} 
-//		if (resY < 0) {
-//			resY = -resY;
-//		}
-//		return resX + resY;
-//	}
+
+	public static int AV(int resX, int resY) {
+		if (resX < 0) {
+			resX = -resX;
+		} 
+		if (resY < 0) {
+			resY = -resY;
+		}
+		return resX + resY;
+	}
 
 }
