@@ -67,6 +67,7 @@ public class Keypad {
 		return Math.abs(handX - numX) + Math.abs(handY - numY);
 	}
 	
+	
 //	public static int AV(int resX, int resY) {
 //		if (resX < 0) {
 //			resX = -resX;
